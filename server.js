@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 const config = require('./config');
 
-mongoose.connect('mongodb://localhost:27018/activitytracker', (err) => {
+mongoose.connect(config.mongo, (err) => {
     if (err){
         console.error(`MongoDB ERROR :: ${err}`);
         process.exit(1);
