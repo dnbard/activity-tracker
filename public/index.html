@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="./styles.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+    <script src="./ifCond.js"></script>
+
+    <script id="explorer-template" type="text/x-handlebars-template">
+        <h1>
+            <i class="large material-icons">today</i>
+            {{date}}
+        </h1>
+        <div class="score">
+            {{#ifCond score '===' 0}}
+                <i class="large material-icons gray">grade</i>
+                <i class="large material-icons gray">grade</i>
+                <i class="large material-icons gray">grade</i>
+                <i class="large material-icons gray">grade</i>
+                <i class="large material-icons gray">grade</i>
+            {{/ifCond}}
+
+            {{#ifCond score '===' 1}}
+                <i class="large material-icons black">grade</i>
+                <i class="large material-icons gray">grade</i>
+                <i class="large material-icons gray">grade</i>
+                <i class="large material-icons gray">grade</i>
+                <i class="large material-icons gray">grade</i>
+            {{/ifCond}}
+
+            {{#ifCond score '===' 2}}
+                <i class="large material-icons black">grade</i>
+                <i class="large material-icons black">grade</i>
+                <i class="large material-icons gray">grade</i>
+                <i class="large material-icons gray">grade</i>
+                <i class="large material-icons gray">grade</i>
+            {{/ifCond}}
+
+            {{#ifCond score '===' 3}}
+                <i class="large material-icons black">grade</i>
+                <i class="large material-icons black">grade</i>
+                <i class="large material-icons black">grade</i>
+                <i class="large material-icons gray">grade</i>
+                <i class="large material-icons gray">grade</i>
+            {{/ifCond}}
+
+            {{#ifCond score '===' 4}}
+                <i class="large material-icons black">grade</i>
+                <i class="large material-icons black">grade</i>
+                <i class="large material-icons black">grade</i>
+                <i class="large material-icons black">grade</i>
+                <i class="large material-icons gray">grade</i>
+            {{/ifCond}}
+
+            {{#ifCond score '===' 5}}
+                <i class="large material-icons black">grade</i>
+                <i class="large material-icons black">grade</i>
+                <i class="large material-icons black">grade</i>
+                <i class="large material-icons black">grade</i>
+                <i class="large material-icons black">grade</i>
+            {{/ifCond}}
+        </div>
+    </script>
+</head>
+
+<body>
+    <main></main>
+    <section id="explorer"></section>
+    <script src="./main.js"></script>
+</body>
+
+</html>

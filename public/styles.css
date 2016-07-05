@@ -1,0 +1,32 @@
+.weeks, section{
+    margin: auto;
+    width: 1100px;
+    text-align: center;
+}
+
+.week{
+    min-width: 10px;
+    margin: 2px;
+    min-height: 128px;
+    display: inline-block;
+}
+
+.day{
+    width: 14px;
+    height: 14px;
+    background: #eee;
+    margin: 2px 0;
+    vertical-align: top;
+    border-radius: 2px;
+
+    cursor: pointer;
+}
+
+.day:hover{
+    box-shadow: 0 0 2px black;
+    opacity: 0.8;
+}
+
+.material-icons.gray{
+    color: #eee;
+}
