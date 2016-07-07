@@ -1,4 +1,8 @@
-const token = '555';
+const token = localStorage.getItem('__token');
+
+if (!token){
+    throw new Error('Token should be defined in LocalStorage!');
+}
 
 const application = document.querySelector('main');
 const weeksWrapper = document.createElement('div');

@@ -1,7 +1,15 @@
-.weeks, section{
+.weeks, section, .login main{
     margin: auto;
     width: 1100px;
     text-align: center;
+}
+
+.login main{
+    margin-top: 250px;
+    width: 400px;
+    padding: 25px 25px 0 25px;
+    border: 1px solid gray;
+    border-radius: 15px;
 }
 
 .week{
@@ -29,4 +37,28 @@
 
 .material-icons.gray{
     color: #eee;
+}
+
+.row{
+    display: block;
+    margin: 2px 0;
+}
+
+.row.centered > * {
+    width: 49%;
+    display: inline-block;
+}
+
+.btn{
+    background: #eee;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 3px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.input{
+    border: none;
+    background: #eee;
 }

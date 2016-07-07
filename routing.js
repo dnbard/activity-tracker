@@ -1,4 +1,5 @@
 const ReportsController = require('./controllers/reports');
+const UsersController = require('./controllers/users');
 
 function getIdentityId(req){
     //TODO: add real users and their tokens
@@ -39,8 +40,28 @@ exports.init = function(app){
         });
     });
 
-//    app.delete('/reports/:id', (req, res) => {
-//
-//    });
+    app.post('/users', (req, res) => {
+        const body = req.body;
+
+        UsersController.createOne(body, (err, data) => {
+            if (err){
+                return res.status(500).send(err);
+            }
+
+            return res.status(200).send(data);
+        });
+    });
+
+    app.post('/login', (req, res) => {
+        const body = req.body;
+
+        UsersController.login(body, (err, data) => {
+            if (err){
+                return res.status(400).send(err);
+            }
+
+            return res.status(200).send(data);
+        });
+    });
 }
 
