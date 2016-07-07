@@ -62,11 +62,31 @@
             {{/ifCond}}
         </div>
     </script>
+
+    <script id="explorer-report-template" type="text/x-handlebars-template">
+
+    </script>
 </head>
 
 <body>
     <main></main>
     <section id="explorer"></section>
+    <section id="explorer-report" style="display: none;">
+        <h1>
+            <i class="large material-icons">today</i>
+            <span class="date"></span>
+        </h1>
+        <div class="score">
+            <i data-index="0" class="large material-icons gray">grade</i>
+            <i data-index="1" class="large material-icons gray">grade</i>
+            <i data-index="2" class="large material-icons gray">grade</i>
+            <i data-index="3" class="large material-icons gray">grade</i>
+            <i data-index="4" class="large material-icons gray">grade</i>
+        </div>
+        <div class="buttons">
+            <button class="btn send">Send</button>
+        </div>
+    </section>
     <script src="./main.js"></script>
 </body>
 

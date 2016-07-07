@@ -78,3 +78,8 @@
     border: none;
     background: #eee;
 }
+
+#explorer-report .material-icons{
+    cursor: pointer;
+    transition: color 0.25s ease-in;
+}
