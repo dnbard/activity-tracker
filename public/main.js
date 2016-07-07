@@ -1,7 +1,7 @@
 const token = localStorage.getItem('__token');
 
 if (!token){
-    throw new Error('Token should be defined in LocalStorage!');
+    console.error('Token should be defined in LocalStorage!');
     location.href = '/login.html';
 }
 
