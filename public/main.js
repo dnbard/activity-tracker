@@ -32,8 +32,8 @@ for(var i = 0 ; i < dayOfTheWeek; i ++){
 }
 
 for(var weekIndex = 1; weekIndex < 53; weekIndex ++){
-    const week = document.createElement('div');
-    week.className = `week`;
+    let week = document.createElement('div');
+    week.className = 'week';
     weeksWrapper.insertBefore(week, weeksWrapper.childNodes[0]);
 
     for(var dayIndex = 0; dayIndex < 7; dayIndex ++){
@@ -44,7 +44,23 @@ for(var weekIndex = 1; weekIndex < 53; weekIndex ++){
 
         week.insertBefore(day, week.childNodes[0]);
 
+        const previousMonth = floatingDate.getMonth();
         floatingDate.setDate(floatingDate.getDate() - 1);
+        const nextMonth = floatingDate.getMonth();
+
+        if (previousMonth !== nextMonth){
+            week.className = 'week week-first';
+
+            for(var _dayIndex = 0; _dayIndex < 7 - dayIndex - 1; _dayIndex ++){
+                const day = document.createElement('div');
+                day.className = 'day transparent';
+                week.insertBefore(day, week.childNodes[0]);
+            }
+
+            week = document.createElement('div');
+            week.className = `week`;
+            weeksWrapper.insertBefore(week, weeksWrapper.childNodes[0]);
+        }
     }
 }
 
