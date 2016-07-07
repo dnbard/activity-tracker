@@ -1,9 +1,17 @@
 const ReportsController = require('./controllers/reports');
 const UsersController = require('./controllers/users');
 
-function getIdentityId(req){
-    //TODO: add real users and their tokens
-    return req.headers['authorization'];
+function getUser(req, res, next){
+    const token = req.headers['authorization'];
+
+    UsersController.getUserbyToken(token, (err, user) => {
+        if (err){
+            return res.status(400).send(err);
+        }
+
+        req._user = user;
+        next();
+    });
 }
 
 exports.init = function(app){
@@ -11,8 +19,8 @@ exports.init = function(app){
         res.send('Hello World!');
     });
 
-    app.get('/reports', (req, res) => {
-        const identityId = getIdentityId(req);
+    app.get('/reports', [getUser], (req, res) => {
+        const identityId = req._user._id;
 
         ReportsController.getFewByIdentity(identityId, (err, reports) => {
             if (err){
@@ -23,8 +31,8 @@ exports.init = function(app){
         });
     });
 
-    app.post('/reports', (req, res) => {
-        const identityId = getIdentityId(req);
+    app.post('/reports', [getUser], (req, res) => {
+        const identityId = req._user._id;
         const body = req.body;
 
         ReportsController.createOne({
@@ -50,6 +58,10 @@ exports.init = function(app){
 
             return res.status(200).send(data);
         });
+    });
+
+    app.get('/login', (req, res) => {
+        res.sendFile(__dirname + '/public/login.html');
     });
 
     app.post('/login', (req, res) => {

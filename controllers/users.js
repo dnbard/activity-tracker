@@ -63,3 +63,28 @@ exports.login = function(data, cb){
         }
     });
 }
+
+
+exports.getUserbyToken = function(token, cb){
+    Token.findOne({ _id: token }, (err, token) => {
+        if (err){
+            return cb(err);
+        }
+
+        if (!token){
+            return cb(new Error('Token not found'));
+        }
+
+        User.findOne({ _id: token.identityId }, (err, user) => {
+            if (err){
+                return cb(err);
+            }
+
+            if (!token){
+                return cb(new Error('User not found'));
+            }
+
+            cb(null, user);
+        });
+    });
+}
