@@ -72,7 +72,7 @@
     border-radius: 3px;
     margin: 5px;
     cursor: pointer;
-}
+}p
 
 .input{
     border: none;
@@ -82,4 +82,8 @@
 #explorer-report .material-icons{
     cursor: pointer;
     transition: color 0.25s ease-in;
+}
+
+.score{
+    padding: 10px 0;
 }
