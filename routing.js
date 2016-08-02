@@ -15,9 +15,8 @@ function getUser(req, res, next){
 }
 
 exports.init = function(app){
-    app.get('/', (req, res) => {
-        res.send('Hello World!');
-    });
+
+    /* REPORTS */
 
     app.get('/reports', [getUser], (req, res) => {
         const identityId = req._user._id;
@@ -48,6 +47,12 @@ exports.init = function(app){
         });
     });
 
+    /* USERS */
+
+    app.get('/users', [getUser], (req, res) => {
+        return req.status(200).send(req._user);
+    });
+
     app.post('/users', (req, res) => {
         const body = req.body;
 
@@ -59,6 +64,8 @@ exports.init = function(app){
             return res.status(200).send(data);
         });
     });
+
+    /* LOGIN */
 
     app.get('/login', (req, res) => {
         res.sendFile(__dirname + '/public/login.html');
