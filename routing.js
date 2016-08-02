@@ -50,7 +50,14 @@ exports.init = function(app){
     /* USERS */
 
     app.get('/users', [getUser], (req, res) => {
-        return req.status(200).send(req._user);
+        const user = req._user;
+
+        return res.status(200).send({
+            _id: user._id,
+            createdAt: user.createdAt,
+            email: user.email,
+            updatedAt: user.updatedAt
+        });
     });
 
     app.post('/users', (req, res) => {

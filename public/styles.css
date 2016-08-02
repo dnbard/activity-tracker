@@ -87,3 +87,7 @@
 .score{
     padding: 10px 0;
 }
+
+section#welcome{
+    margin-bottom: 10px;
+}
