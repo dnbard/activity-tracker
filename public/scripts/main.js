@@ -1,4 +1,6 @@
 const token = localStorage.getItem('__token');
+const MAX_WEEKS = window.mobileAndTabletCheck() ? 8 : 53;
+const MAX_DAYS = 7;
 
 if (!token){
     console.error('Token should be defined in LocalStorage!');
@@ -32,12 +34,12 @@ for(var i = 0 ; i < dayOfTheWeek; i ++){
     floatingDate.setDate(floatingDate.getDate() - 1);
 }
 
-for(var weekIndex = 1; weekIndex < 53; weekIndex ++){
+for(var weekIndex = 1; weekIndex < MAX_WEEKS; weekIndex ++){
     let week = document.createElement('div');
     week.className = 'week';
     weeksWrapper.insertBefore(week, weeksWrapper.childNodes[0]);
 
-    for(var dayIndex = 0; dayIndex < 7; dayIndex ++){
+    for(var dayIndex = 0; dayIndex < MAX_DAYS; dayIndex ++){
         const day = document.createElement('div');
         day.className = 'day';
         day.setAttribute('data-timestamp', floatingDate);
@@ -52,7 +54,7 @@ for(var weekIndex = 1; weekIndex < 53; weekIndex ++){
         if (previousMonth !== nextMonth){
             week.className = 'week week-first';
 
-            for(var _dayIndex = 0; _dayIndex < 7 - dayIndex - 1; _dayIndex ++){
+            for(var _dayIndex = 0; _dayIndex < MAX_DAYS - dayIndex - 1; _dayIndex ++){
                 const day = document.createElement('div');
                 day.className = 'day transparent';
                 week.insertBefore(day, week.childNodes[0]);
