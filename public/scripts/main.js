@@ -47,13 +47,16 @@ for(var weekIndex = 1; weekIndex < MAX_WEEKS; weekIndex ++){
 
         week.insertBefore(day, week.childNodes[0]);
 
-        const previousMonth = floatingDate.getMonth();
         const dateArray = floatingDate.toDateString().split(' ');
+
+        const previousMonth = floatingDate.getMonth();
+        const previousYear = floatingDate.getYear();
         floatingDate.setDate(floatingDate.getDate() - 1);
         const nextMonth = floatingDate.getMonth();
+        const nextYear = floatingDate.getYear();
 
         if (previousMonth !== nextMonth){
-            week.className = 'week week-first';
+            week.className = `week week-first ${previousYear !== nextYear ? 'week-new_year': ''}`;
 
             const dateLabel = document.createElement('div');
             dateLabel.className = 'date-label';

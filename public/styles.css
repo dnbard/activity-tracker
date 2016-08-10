@@ -26,6 +26,12 @@
     position: relative;
 }
 
+.week-new_year{
+    border-left-color: #E91E63;
+    border-left-style: dashed;
+    border-left-width: 1px;
+}
+
 .day{
     width: 12px;
     height: 12px;
