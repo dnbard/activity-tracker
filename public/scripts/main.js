@@ -8,10 +8,12 @@ if (!token){
 }
 
 const application = document.querySelector('main');
-const weeksWrapper = document.createElement('div');
-weeksWrapper.className = 'weeks';
+const weeksWrapperNew = document.createElement('div');
+weeksWrapperNew.className = 'weeks';
+application.appendChild(weeksWrapperNew);
 
-application.appendChild(weeksWrapper);
+const weeksWrapper = document.createElement('div');
+weeksWrapperNew.appendChild(weeksWrapper);
 
 
 const today = new Date();
@@ -116,6 +118,11 @@ fetch('/reports', {
     reports.forEach(colorCell);
 
     reportsCollection = reports;
+
+    window.contibs.init({
+        container: weeksWrapperNew,
+        reports: reports
+    });
 });
 
 

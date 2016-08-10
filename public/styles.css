@@ -11,10 +11,16 @@ main{
     display: inline-block;
     border: 1px solid #eeeeee;
     border-radius: 10px;
-    padding: 12px 20px 0 20px;
     overflow: hidden;
     background: #fbfbfb;
     box-shadow: 2px 2px 5px #EEEEEE;
+    padding-top: 12px;
+}
+
+.weeks .footer{
+    width: 100%;
+    min-height: 12px;
+    background: #ebebeb;
 }
 
 .login main{
@@ -32,6 +38,14 @@ main{
     min-height: 95px;
     border-bottom: 1px dotted #eee;
     position: relative;
+}
+
+.week:first-child{
+    margin-left: 20px;
+}
+
+.week:last-child{
+    margin-right: 20px;
 }
 
 .week-first{
