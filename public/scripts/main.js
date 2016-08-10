@@ -48,6 +48,7 @@ for(var weekIndex = 1; weekIndex < MAX_WEEKS; weekIndex ++){
         week.insertBefore(day, week.childNodes[0]);
 
         const previousMonth = floatingDate.getMonth();
+        const dateArray = floatingDate.toDateString().split(' ');
         floatingDate.setDate(floatingDate.getDate() - 1);
         const nextMonth = floatingDate.getMonth();
 
@@ -55,7 +56,6 @@ for(var weekIndex = 1; weekIndex < MAX_WEEKS; weekIndex ++){
             week.className = 'week week-first';
 
             const dateLabel = document.createElement('div');
-            const dateArray = floatingDate.toDateString().split(' ');
             dateLabel.className = 'date-label';
             dateLabel.textContent = `${dateArray[1]} ${dateArray[3]}`;
             week.insertBefore(dateLabel, week.childNodes[0]);
