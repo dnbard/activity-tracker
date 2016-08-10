@@ -54,6 +54,12 @@ for(var weekIndex = 1; weekIndex < MAX_WEEKS; weekIndex ++){
         if (previousMonth !== nextMonth){
             week.className = 'week week-first';
 
+            const dateLabel = document.createElement('div');
+            const dateArray = floatingDate.toDateString().split(' ');
+            dateLabel.className = 'date-label';
+            dateLabel.textContent = `${dateArray[1]} ${dateArray[3]}`;
+            week.insertBefore(dateLabel, week.childNodes[0]);
+
             for(var _dayIndex = 0; _dayIndex < MAX_DAYS - dayIndex - 1; _dayIndex ++){
                 const day = document.createElement('div');
                 day.className = 'day transparent';

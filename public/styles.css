@@ -12,6 +12,7 @@
 }
 
 .week{
+    padding-top: 14px;
     margin: 2px;
     display: inline-block;
     min-height: 100px;
@@ -22,6 +23,7 @@
     border-left: 1px dotted #eee;
     margin-left: 4px;
     padding-left: 2px;
+    position: relative;
 }
 
 .day{
@@ -89,4 +91,14 @@
 
 section#welcome{
     margin-bottom: 10px;
+}
+
+
+.date-label{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 80px;
+    font-size: 8pt;
+    color: grey;
 }
