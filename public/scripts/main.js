@@ -55,8 +55,12 @@ for(var weekIndex = 1; weekIndex < MAX_WEEKS; weekIndex ++){
         const nextMonth = floatingDate.getMonth();
         const nextYear = floatingDate.getYear();
 
-        if (previousMonth !== nextMonth){
-            week.className = `week week-first ${previousYear !== nextYear ? 'week-new_year': ''}`;
+        const isLastDay = weekIndex + 1 === MAX_WEEKS && dayIndex + 1 === MAX_DAYS;
+
+        if (previousMonth !== nextMonth || isLastDay){
+            if (!isLastDay){
+                week.className = `week week-first ${previousYear !== nextYear ? 'week-new_year': ''}`;
+            }
 
             const dateLabel = document.createElement('div');
             dateLabel.className = 'date-label';
@@ -69,9 +73,11 @@ for(var weekIndex = 1; weekIndex < MAX_WEEKS; weekIndex ++){
                 week.insertBefore(day, week.childNodes[0]);
             }
 
-            week = document.createElement('div');
-            week.className = `week`;
-            weeksWrapper.insertBefore(week, weeksWrapper.childNodes[0]);
+            if (!isLastDay){
+                week = document.createElement('div');
+                week.className = `week`;
+                weeksWrapper.insertBefore(week, weeksWrapper.childNodes[0]);
+            }
         }
     }
 }
