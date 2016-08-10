@@ -82,6 +82,12 @@ function colorCell(report){
     date.setHours(0, 0, 0, 0);
 
     const el = document.querySelector(`.day[data-timestamp="${date}"]`);
+
+    if (!el){
+        //DOM element not found; maybe old record
+        return;
+    }
+
     el._report = report;
 
     if (report.score > 0){
