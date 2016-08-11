@@ -21,6 +21,8 @@ main{
     width: 100%;
     min-height: 12px;
     background: #ebebeb;
+    display: flex;
+    justify-content: center;
 }
 
 .login main{
@@ -136,4 +138,30 @@ section#welcome{
     font-size: 8pt;
     color: grey;
     text-align: left;
+}
+
+.contrib{
+    min-height: 50px;
+    min-width: 110px;
+    margin: 5px;
+    background: white;
+    border-radius: 10px;
+    padding: 5px 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.contrib_score{
+    font-weight: bolder;
+    color: #b2b2b2;
+    font-size: 22pt;
+    font-family: sans-serif;
+}
+
+.contrib_details{
+    font-size: 10pt;
+    text-transform: uppercase;
+    color: #545454;
+    margin-top: 2px;
 }

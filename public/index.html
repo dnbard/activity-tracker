@@ -10,8 +10,18 @@
     <script src="./scripts/mobileDetect.js"></script>
 
     <script id="contributions-template" type="text/x-handlebars-template">
-        <div><b>{{contibsCount}}</b> contributions overall.</div>
-        <div>Your average score is <b>{{contibsScore}}</b>.</div>
+        <div class="contrib">
+            <div class="contrib_score">{{contibsCount}}</div>
+            <div class="contrib_details">Contibutions</div>
+        </div>
+        <div class="contrib">
+            <div class="contrib_score">{{lastWeekScore}}</div>
+            <div class="contrib_details">Score last week</div>
+        </div>
+        <div class="contrib">
+            <div class="contrib_score">{{weekScore}}</div>
+            <div class="contrib_details">Score this week</div>
+        </div>
     </script>
 
     <script id="explorer-template" type="text/x-handlebars-template">
