@@ -1,13 +1,16 @@
-(function(){
-    const token = localStorage.getItem('__token');
+requirejs([
+    'components/welcome',
+    'components/main',
+    'version',
 
-    fetch('/users', {
-        headers: {
-            authorization: token,
-            'content-type': 'application/json'
-        }
-    }).then(r => r.json()).then(user => {
-        const welcomeSection = document.querySelector('#welcome');
-        welcomeSection.textContent = `Hello, ${user.email}.`;
+    'core/mobile'
+], function(WelcomeComponent, MainComponent, version){
+    WelcomeComponent.init({
+        selector: '#welcome'
     });
-})();
+    version.init({
+        selector: '#version'
+    });
+
+    MainComponent.init();
+});

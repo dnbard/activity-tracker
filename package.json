@@ -1,6 +1,6 @@
 {
   "name": "activity-tracker",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "description": "Activity tracker website",
   "main": "server.js",
   "scripts": {
