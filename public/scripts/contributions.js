@@ -47,8 +47,8 @@ window.contibs = {
         footer.innerHTML = contribsTemplate({
             contibsCount: reportsLength,
             contibsScore: reportsLength !== 0 ? (reports.map(r => r.score).reduce((a, b) => a + b) / reportsLength).toFixed(1) : 0,
-            weekScore: (reportsWeek.map(r => r.score).reduce((a, b) => a + b, []) / daysPassedSinceMonday(now)).toFixed(1),
-            lastWeekScore: (reportsWeek2.map(r => r.score).reduce((a, b) => a + b, []) / 7).toFixed(1)
+            weekScore: reportsWeek.length !== 0 ? (reportsWeek.map(r => r.score).reduce((a, b) => a + b) / daysPassedSinceMonday(now)).toFixed(1) : 0,
+            lastWeekScore: reportsWeek2.length !== 0 ? (reportsWeek2.map(r => r.score).reduce((a, b) => a + b) / 7).toFixed(1) : 0
         });
     }
 }
