@@ -176,6 +176,7 @@ section#welcome{
 }
 
 .btn-logout{
+    font-size: 10pt;
     cursor: pointer;
     margin-left: 5px;
     transition: 0.25s ease-in all;
