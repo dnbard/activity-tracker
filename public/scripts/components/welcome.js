@@ -1,16 +1,9 @@
 define([
-    'core/token'
-],function(tokenProvider){
-    const token = tokenProvider.get();
-
+    'core/fetch'
+],function(fetch){
     return {
         init: function(options){
-            fetch('/users', {
-                headers: {
-                    authorization: token,
-                    'content-type': 'application/json'
-                }
-            }).then(r => r.json()).then(user => {
+            fetch('/users').then(user => {
                 const welcomeSection = document.querySelector(options.selector);
                 welcomeSection.textContent = `Hello, ${user.email}.`;
             });

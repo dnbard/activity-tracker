@@ -1,7 +1,9 @@
 define([
     'core/token',
-    'contributions'
-], function(tokenProvider, Contributions){
+    'core/fetch',
+    'contributions',
+    'helpers/dom'
+], function(tokenProvider, fetch, Contributions, DOM){
     return {
         init: function(){
             const token = tokenProvider.get();
@@ -15,12 +17,8 @@ define([
             }
 
             const application = document.querySelector('main');
-            const weeksWrapperNew = document.createElement('div');
-            weeksWrapperNew.className = 'weeks';
-            application.appendChild(weeksWrapperNew);
-
-            const weeksWrapper = document.createElement('div');
-            weeksWrapperNew.appendChild(weeksWrapper);
+            const weeksWrapperNew = DOM.createCustomDiv(application, 'weeks');
+            const weeksWrapper = DOM.createCustomDiv(weeksWrapperNew);
 
 
             const today = new Date();
@@ -28,33 +26,31 @@ define([
             floatingDate.setHours(0, 0, 0, 0);
             const dayOfTheWeek = today.getDay();
 
-            const thisWeek = document.createElement('div');
-            thisWeek.className = 'week';
-            weeksWrapper.appendChild(thisWeek);
+            const thisWeek = DOM.createCustomDiv(weeksWrapper, 'week');
 
             for(var i = 0 ; i < dayOfTheWeek; i ++){
-                const day = document.createElement('div');
-                day.className = 'day';
-                day.setAttribute('data-timestamp', floatingDate);
-                day.setAttribute('title', floatingDate.toDateString());
-
-                thisWeek.insertBefore(day, thisWeek.childNodes[0]);
+                DOM.createCustomDiv(thisWeek, 'day', 'insertBefore', [{
+                    name: 'data-timestamp',
+                    value: floatingDate
+                },{
+                    name: 'title',
+                    value: floatingDate.toDateString()
+                }]);
 
                 floatingDate.setDate(floatingDate.getDate() - 1);
             }
 
             for(var weekIndex = 1; weekIndex < MAX_WEEKS; weekIndex ++){
-                let week = document.createElement('div');
-                week.className = 'week';
-                weeksWrapper.insertBefore(week, weeksWrapper.childNodes[0]);
+                let week = DOM.createCustomDiv(weeksWrapper, 'week', 'insertBefore');
 
                 for(var dayIndex = 0; dayIndex < MAX_DAYS; dayIndex ++){
-                    const day = document.createElement('div');
-                    day.className = 'day';
-                    day.setAttribute('data-timestamp', floatingDate);
-                    day.setAttribute('title', floatingDate.toDateString());
-
-                    week.insertBefore(day, week.childNodes[0]);
+                    DOM.createCustomDiv(week, 'day', 'insertBefore', [{
+                        name: 'data-timestamp',
+                        value: floatingDate
+                    },{
+                        name: 'title',
+                        value: floatingDate.toDateString()
+                    }]);
 
                     const dateArray = floatingDate.toDateString().split(' ');
 
@@ -71,21 +67,15 @@ define([
                             week.className = `week week-first ${previousYear !== nextYear ? 'week-new_year': ''}`;
                         }
 
-                        const dateLabel = document.createElement('div');
-                        dateLabel.className = 'date-label';
+                        const dateLabel = DOM.createCustomDiv(week, 'date-label', 'insertBefore');
                         dateLabel.textContent = `${dateArray[1]} ${dateArray[3]}`;
-                        week.insertBefore(dateLabel, week.childNodes[0]);
 
                         for(var _dayIndex = 0; _dayIndex < MAX_DAYS - dayIndex - 1; _dayIndex ++){
-                            const day = document.createElement('div');
-                            day.className = 'day transparent';
-                            week.insertBefore(day, week.childNodes[0]);
+                            DOM.createCustomDiv(week, 'day transparent', 'insertBefore')
                         }
 
                         if (!isLastDay){
-                            week = document.createElement('div');
-                            week.className = `week`;
-                            weeksWrapper.insertBefore(week, weeksWrapper.childNodes[0]);
+                            week = DOM.createCustomDiv(weeksWrapper, 'week', 'insertBefore');
                         }
                     }
                 }
@@ -119,9 +109,7 @@ define([
                 }
             }
 
-            fetch('/reports', {
-                headers: { authorization: token }
-            }).then(r => r.json()).then(reports => {
+            fetch('/reports').then(reports => {
                 reports.forEach(colorCell);
 
                 reportsCollection = reports;
@@ -198,21 +186,15 @@ define([
 
                 fetch('/reports', {
                     method: 'post',
-                    headers: {
-                        authorization: token,
-                        'content-type': 'application/json'
-                    },
                     body: JSON.stringify({
                         score: starSelected + 1,
                         timestamp: explorerReportElement._date
                     })
-                }).then(r => r.json()).then((report) => {
+                }).then((report) => {
                     explorerReportElement.style.display="none";
                     colorCell(report);
                 });
             }
-
-
         }
     }
 });
