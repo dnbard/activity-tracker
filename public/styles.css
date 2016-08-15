@@ -126,6 +126,7 @@ main{
 }
 
 section#welcome{
+    max-width: 998px;
     margin-bottom: 10px;
     display: flex;
     justify-content: flex-end;
