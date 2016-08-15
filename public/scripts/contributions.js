@@ -19,7 +19,8 @@ function getPreviousMonday(d) {
 }
 
 function daysPassedSinceMonday(d){
-    return d.getDay();
+    const day = d.getDay();
+    return day == 0 ? 7 : day;
 }
 
 
@@ -46,8 +47,8 @@ window.contibs = {
         footer.innerHTML = contribsTemplate({
             contibsCount: reportsLength,
             contibsScore: reportsLength !== 0 ? (reports.map(r => r.score).reduce((a, b) => a + b) / reportsLength).toFixed(1) : 0,
-            weekScore: (reportsWeek.map(r => r.score).reduce((a, b) => a + b) / daysPassedSinceMonday(now)).toFixed(1),
-            lastWeekScore: (reportsWeek2.map(r => r.score).reduce((a, b) => a + b) / 7).toFixed(1)
+            weekScore: (reportsWeek.map(r => r.score).reduce((a, b) => a + b, []) / daysPassedSinceMonday(now)).toFixed(1),
+            lastWeekScore: (reportsWeek2.map(r => r.score).reduce((a, b) => a + b, []) / 7).toFixed(1)
         });
     }
 }
