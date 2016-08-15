@@ -127,8 +127,10 @@ main{
 
 section#welcome{
     margin-bottom: 10px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 }
-
 
 .date-label{
     position: absolute;
@@ -171,4 +173,14 @@ section#welcome{
     margin-top: 4px;
     font-family: sans-serif;
     color: darkgray;
+}
+
+.btn-logout{
+    cursor: pointer;
+    margin-left: 5px;
+    transition: 0.25s ease-in all;
+}
+
+.btn-logout:hover{
+    color: red;
 }
