@@ -1,5 +1,6 @@
 const ReportsController = require('./controllers/reports');
 const UsersController = require('./controllers/users');
+const InfoController = require('./controllers/info');
 
 function getUser(req, res, next){
     const token = req.headers['authorization'];
@@ -88,6 +89,12 @@ exports.init = function(app){
 
             return res.status(200).send(data);
         });
+    });
+
+    /* INFO */
+
+    app.get('/info', (req, res) => {
+        res.send(InfoController.getInfo());
     });
 }
 

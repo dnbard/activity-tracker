@@ -165,3 +165,10 @@ section#welcome{
     color: #545454;
     margin-top: 2px;
 }
+
+#version{
+    font-size: 9pt;
+    margin-top: 4px;
+    font-family: sans-serif;
+    color: darkgray;
+}
