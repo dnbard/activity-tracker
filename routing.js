@@ -48,6 +48,19 @@ exports.init = function(app){
         });
     });
 
+    app.post('/reports/:id', [getUser], (req, res) => {
+        const identityId = req._user._id;
+        const body = req.body;
+
+        ReportsController.changeScoreById(identityId, req.params.id, body.score, (err, report) => {
+            if (err){
+                return res.status(400).send(err);
+            }
+
+            return res.send(report);
+        });
+    });
+
     /* USERS */
 
     app.get('/users', [getUser], (req, res) => {

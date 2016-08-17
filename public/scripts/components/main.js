@@ -123,6 +123,7 @@ define([
 
             const explorerTemplate = Handlebars.compile(document.querySelector("#explorer-template").innerHTML);
             const explorerReportElement = document.querySelector("#explorer-report");
+            let selectedReport = null;
 
             weeksWrapper.onclick = function(e){
                 const element = document.querySelector('#explorer');
@@ -141,14 +142,18 @@ define([
                     explorerReportElement._date = e.target.getAttribute('data-timestamp');
                     starSelected = -1;
                     highlightStars(-1);
-                    return;
-                }
 
-                element.innerHTML = explorerTemplate({
-                    date: new Date(report.timestamp).toDateString(),
-                    score: report.score
-                });
-                explorerReportElement.style.display="none";
+                    selectedReport = null;
+                } else {
+                    element.innerHTML = '';
+                    explorerReportElement.style.display="block";
+                    explorerReportElement.querySelector('.date').textContent = e.target.title;
+                    explorerReportElement._date = e.target.getAttribute('data-timestamp');
+                    starSelected = report.score - 1;
+                    highlightStars(report.score - 1);
+
+                    selectedReport = report;
+                }
             }
 
             let starSelected = -1;
@@ -184,16 +189,32 @@ define([
                     return;
                 }
 
-                fetch('/reports', {
-                    method: 'post',
-                    body: JSON.stringify({
-                        score: starSelected + 1,
-                        timestamp: explorerReportElement._date
-                    })
-                }).then((report) => {
+                function onScoreChanges(report){
                     explorerReportElement.style.display="none";
                     colorCell(report);
-                });
+                    location.reload();
+                }
+
+                function onScoreChangeFailure(){
+                    explorerReportElement.style.display="none";
+                }
+
+                if (selectedReport == null){
+                    fetch('/reports', {
+                        method: 'post',
+                        body: JSON.stringify({
+                            score: starSelected + 1,
+                            timestamp: explorerReportElement._date
+                        })
+                    }).then(onScoreChanges).catch(onScoreChangeFailure);
+                } else {
+                    fetch(`/reports/${selectedReport._id}`, {
+                        method: 'post',
+                        body: JSON.stringify({
+                            score: starSelected + 1
+                        })
+                    }).then(onScoreChanges).catch(onScoreChangeFailure);
+                }
             }
         }
     }
