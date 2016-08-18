@@ -120,8 +120,6 @@ define([
                 });
             });
 
-
-            const explorerTemplate = Handlebars.compile(document.querySelector("#explorer-template").innerHTML);
             const explorerReportElement = document.querySelector("#explorer-report");
             let selectedReport = null;
 
