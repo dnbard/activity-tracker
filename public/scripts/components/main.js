@@ -2,8 +2,9 @@ define([
     'core/token',
     'core/fetch',
     'contributions',
-    'helpers/dom'
-], function(tokenProvider, fetch, Contributions, DOM){
+    'helpers/dom',
+    'helpers/holiday'
+], function(tokenProvider, fetch, Contributions, DOM, Holiday){
     return {
         init: function(){
             const token = tokenProvider.get();
@@ -29,13 +30,17 @@ define([
             const thisWeek = DOM.createCustomDiv(weeksWrapper, 'week');
 
             for(var i = 0 ; i < dayOfTheWeek; i ++){
-                DOM.createCustomDiv(thisWeek, 'day', 'insertBefore', [{
+                const dayElement = DOM.createCustomDiv(thisWeek, 'day', 'insertBefore', [{
                     name: 'data-timestamp',
                     value: floatingDate
                 },{
                     name: 'title',
                     value: floatingDate.toDateString()
                 }]);
+
+                if (Holiday.isHoliday(floatingDate)){
+                    dayElement.classList.add('holiday');
+                }
 
                 floatingDate.setDate(floatingDate.getDate() - 1);
             }
@@ -44,13 +49,17 @@ define([
                 let week = DOM.createCustomDiv(weeksWrapper, 'week', 'insertBefore');
 
                 for(var dayIndex = 0; dayIndex < MAX_DAYS; dayIndex ++){
-                    DOM.createCustomDiv(week, 'day', 'insertBefore', [{
+                    const dayElement = DOM.createCustomDiv(week, 'day', 'insertBefore', [{
                         name: 'data-timestamp',
                         value: floatingDate
                     },{
                         name: 'title',
                         value: floatingDate.toDateString()
                     }]);
+
+                    if (Holiday.isHoliday(floatingDate)){
+                        dayElement.classList.add('holiday');
+                    }
 
                     const dateArray = floatingDate.toDateString().split(' ');
 
@@ -71,7 +80,7 @@ define([
                         dateLabel.textContent = `${dateArray[1]} ${dateArray[3]}`;
 
                         for(var _dayIndex = 0; _dayIndex < MAX_DAYS - dayIndex - 1; _dayIndex ++){
-                            DOM.createCustomDiv(week, 'day transparent', 'insertBefore')
+                            DOM.createCustomDiv(week, 'day transparent', 'insertBefore');
                         }
 
                         if (!isLastDay){
@@ -127,7 +136,7 @@ define([
                 const element = document.querySelector('#explorer');
                 const report = e.target._report;
 
-                if (e.target.className !== 'day'){
+                if (e.target.className.indexOf('day') === -1){
                     element.innerHTML = '';
                     explorerReportElement.style.display="none";
                     return;
