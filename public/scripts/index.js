@@ -1,11 +1,11 @@
 requirejs([
     'components/welcome',
     'components/main',
-    'components/goals',
+//    'components/goals',
     'version',
 
     'core/mobile'
-], function(WelcomeComponent, MainComponent, GoalsComponent, version){
+], function(WelcomeComponent, MainComponent, /*GoalsComponent,*/ version){
     WelcomeComponent.init({
         selector: '#welcome'
     });
