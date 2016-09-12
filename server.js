@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require('mongoose');
 
 const config = require('./config');
+const Migrations = require('./core/migrations');
 
 mongoose.connect(config.mongo, (err) => {
     if (err){
@@ -12,13 +13,22 @@ mongoose.connect(config.mongo, (err) => {
         console.log('MongoDB :: connected');
     }
 
-    app.listen(config.port, function () {
-        const middlewares = require('./middlewares');
-        const routing = require('./routing');
+    Migrations.init(null, (err) => {
+        if (err){
+            console.error(`Migrations ERROR :: ${err}`);
+            process.exit(1);
+        } else {
+            console.log('Migrations :: done');
+        }
 
-        middlewares.init(app);
-        routing.init(app);
+        app.listen(config.port, () => {
+            const middlewares = require('./middlewares');
+            const routing = require('./routing');
 
-        console.log(`HTTP Server :: listening on port ${config.port}`);
+            middlewares.init(app);
+            routing.init(app);
+
+            console.log(`HTTP Server :: listening on port ${config.port}`);
+        });
     });
 });
