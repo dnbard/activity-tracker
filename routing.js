@@ -1,6 +1,7 @@
 const ReportsController = require('./controllers/reports');
 const UsersController = require('./controllers/users');
 const InfoController = require('./controllers/info');
+const GoalsController = require('./controllers/goals');
 
 function getUser(req, res, next){
     const token = req.headers['authorization'];
@@ -108,6 +109,39 @@ exports.init = function(app){
 
     app.get('/info', (req, res) => {
         res.send(InfoController.getInfo());
+    });
+
+    /* GOALS */
+
+    app.get('/goals', [getUser], (req, res) => {
+        const user = req._user;
+        GoalsController.getAllByIdentityId(user._id, (err, goals) => {
+            if (err){
+                return res.status(500).send(err);
+            }
+
+            res.send(goals);
+        });
+    });
+
+    app.post('/goals', [getUser], (req, res) => {
+        const user = req._user;
+        const body = req.body;
+
+        GoalsController.createOne({
+            title: body.title,
+            score: body.score,
+            priority: body.priority,
+            icon: body.icon,
+            completeUntil: body.completeUntil,
+            identityId: user._id
+        }, (err, goal) => {
+            if (err){
+                return res.status(400).send(err);
+            }
+
+            res.send(goal);
+        });
     });
 }
 

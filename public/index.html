@@ -32,6 +32,10 @@
         <span>{{person}}</span>
         <span class="material-icons btn-logout" title="Logout">not_interested</span>
     </script>
+
+    <script id="goal-template" type="text/x-handlebars-template">
+        <span>{{title}}</span>
+    </script>
 </head>
 
 <body>
@@ -54,6 +58,7 @@
             <button class="btn send">Send</button>
         </div>
     </section>
+    <section id="goals"></section>
     <section id="version"></section>
 
     <script data-main="./scripts/index.js" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.js"></script>
