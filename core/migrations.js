@@ -4,7 +4,8 @@ const AttributeNames = require('../enums/attributes');
 const migrations = [
     function(options, cb){
         cb();
-    }
+    },
+    require('../migrations/1-oldScore')
 ];
 
 exports.init = function(options, cb){
@@ -14,7 +15,12 @@ exports.init = function(options, cb){
 
             if (index < migrations.length){
                 console.log(`Execute migration(index=${index})`);
-                migrations[index].call(this, null, () => {
+                migrations[index].call(this, null, (err) => {
+                    if (err){
+                        console.error(err);
+                        process.exit(1);
+                    }
+
                     index ++;
                     DBVersionAttribute.value = index.toString();
                     DBVersionAttribute.save(migrationHandler);

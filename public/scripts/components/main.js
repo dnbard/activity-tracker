@@ -118,7 +118,21 @@ define([
                 }
             }
 
+            function formatScore(reports){
+                if (reports.length === 0){
+                    return;
+                }
+
+                const maxScore = reports.map(r => r.score).reduce((a, b) => a > b ? a : b) || 1;
+
+                reports.forEach(r => {
+                    r.calories = r.score;
+                    r.score = (r.score / maxScore * 5).toFixed(0);
+                });
+            }
+
             fetch('/reports').then(reports => {
+                formatScore(reports);
                 reports.forEach(colorCell);
 
                 reportsCollection = reports;
