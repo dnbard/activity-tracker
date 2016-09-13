@@ -1,3 +1,6 @@
+const DEFAULT_WEIGHT = 59;
+const FLAT_COEF = 1.22;
+
 exports.oldScoreToKM = function(score){
     var km = 0;
 
@@ -13,21 +16,21 @@ exports.oldScoreToKM = function(score){
 }
 
 const cals = [
-    { speed: 8, cals: 37 },
-    { speed: 16, cals: 133 },
-    { speed: 24, cals: 349 },
-    { speed: 32, cals: 742 },
-    { speed: 40, cals: 1374 },
-    { speed: 48, cals: 2303 }
-];
+    { speed: 8, cals: 235 },
+    { speed: 16, cals: 472 },
+    { speed: 24, cals: 590 },
+    { speed: 32, cals: 720 },
+    { speed: 40, cals: 944 }
+]; //weight 59 kg
 
-exports.getCalories = function(distance, time){
+exports.getCalories = function(distance, time, weight){
     const averageSpeed = distance / time;
+    const weightMod = weight ? weight / DEFAULT_WEIGHT / FLAT_COEF : 1;
 
     const closestCalsValue = cals.map(c => {
         c.diff = Math.abs(c.speed - averageSpeed);
         return c;
     }).reduce((a, b) => a.diff > b.diff ? b : a);
 
-    return closestCalsValue.cals * averageSpeed / closestCalsValue.speed * time;
+    return closestCalsValue.cals * averageSpeed / closestCalsValue.speed * time * weightMod;
 }
