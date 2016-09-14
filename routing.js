@@ -70,7 +70,8 @@ exports.init = function(app){
             _id: user._id,
             createdAt: user.createdAt,
             email: user.email,
-            updatedAt: user.updatedAt
+            updatedAt: user.updatedAt,
+            weight: user.weight
         });
     });
 
@@ -108,6 +109,12 @@ exports.init = function(app){
 
     app.get('/info', (req, res) => {
         res.send(InfoController.getInfo());
+    });
+
+    /* PROFILE */
+
+    app.get('/profile', (req, res) => {
+        res.sendFile(__dirname + '/public/profile.html');
     });
 }
 

@@ -1,4 +1,4 @@
-.weeks, section, .login main{
+.weeks, section, .login main, .box{
     margin: auto;
     text-align: center;
 }
@@ -7,7 +7,7 @@ main{
     text-align: center;
 }
 
-.weeks{
+.weeks, .box{
     display: inline-block;
     border: 1px solid #eeeeee;
     border-radius: 10px;
@@ -15,9 +15,11 @@ main{
     background: #fbfbfb;
     box-shadow: 2px 2px 5px #EEEEEE;
     padding-top: 12px;
+    max-width: 1061px;
+    min-width: 1061px;
 }
 
-.weeks .footer{
+.weeks .footer, .box .footer{
     width: 100%;
     min-height: 12px;
     background: #ebebeb;
@@ -138,6 +140,15 @@ section#welcome{
     align-items: center;
 }
 
+section#welcome a{
+    text-decoration: none;
+    color: gray;
+}
+
+section#welcome a > *{
+    vertical-align: middle;
+}
+
 .date-label{
     position: absolute;
     top: 0;
@@ -190,4 +201,20 @@ section#welcome{
 
 .btn-logout:hover{
     color: red;
+}
+
+.btn{
+    background: #5151e4;
+    color: white;
+    font-size: 12pt;
+    font-variant: small-caps;
+    text-decoration: none;
+    font-family: sans-serif;
+}
+
+.input{
+    margin: 5px 0;
+    padding: 1px 10px;
+    border-radius: 2px;
+    border: 1px solid lightgray;
 }

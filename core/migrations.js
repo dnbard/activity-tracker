@@ -6,7 +6,8 @@ const migrations = [
         cb();
     },
     require('../migrations/1-oldScore'),
-    require('../migrations/2-weightScore')
+    require('../migrations/2-weightScore'),
+    require('../migrations/3-setDefaultWeight')
 ];
 
 exports.init = function(options, cb){
