@@ -1,5 +1,6 @@
 const DEFAULT_WEIGHT = 59;
 const FLAT_COEF = 1.22;
+const MINUTES_IN_HOUR = 60;
 
 exports.oldScoreToKM = function(score){
     var km = 0;
@@ -24,7 +25,7 @@ const cals = [
 ]; //weight 59 kg
 
 exports.getCalories = function(distance, time, weight){
-    const averageSpeed = distance / time;
+    const averageSpeed = distance / time / MINUTES_IN_HOUR;
     const weightMod = weight ? weight / DEFAULT_WEIGHT / FLAT_COEF : 1;
 
     const closestCalsValue = cals.map(c => {
@@ -32,5 +33,5 @@ exports.getCalories = function(distance, time, weight){
         return c;
     }).reduce((a, b) => a.diff > b.diff ? b : a);
 
-    return closestCalsValue.cals * averageSpeed / closestCalsValue.speed * time * weightMod;
+    return closestCalsValue.cals * averageSpeed / closestCalsValue.speed * time * weightMod / MINUTES_IN_HOUR
 }
