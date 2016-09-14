@@ -236,16 +236,16 @@ section#welcome a > *{
 }
 
 #distance .input{
-    width: 40px;
+    width: 75px;
     font-size: 12pt;
 }
 
 #duration .input{
-    width: 90px;
+    width: 125px;
     font-size: 12pt;
 }
 
 #score .input{
-    width: 75px;
+    width: 60px;
     font-size: 12pt;
 }
