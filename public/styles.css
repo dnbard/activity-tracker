@@ -7,6 +7,14 @@ main{
     text-align: center;
 }
 
+h1 *{
+    vertical-align: middle;
+}
+
+hr{
+    border: 1px dotted lightgray;
+}
+
 .weeks, .box{
     display: inline-block;
     border: 1px solid #eeeeee;
@@ -217,4 +225,27 @@ section#welcome a > *{
     padding: 1px 10px;
     border-radius: 2px;
     border: 1px solid lightgray;
+}
+
+#distance, #duration, #score{
+    text-align: center;
+}
+
+#distance *, #duration *, #score *{
+    vertical-align: middle;
+}
+
+#distance .input{
+    width: 40px;
+    font-size: 12pt;
+}
+
+#duration .input{
+    width: 90px;
+    font-size: 12pt;
+}
+
+#score .input{
+    width: 75px;
+    font-size: 12pt;
 }

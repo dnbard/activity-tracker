@@ -1,4 +1,6 @@
-define(function(){
+define([
+    'text!templates/contributions.html'
+],function(template){
     function getMonday(d) {
         d = new Date(d);
         d.setHours(0, 0, 0, 0);
@@ -36,7 +38,7 @@ define(function(){
             const week2MondayDiff = now - getPreviousMonday(now);
 
 
-            const contribsTemplate = Handlebars.compile(document.querySelector("#contributions-template").innerHTML);
+            const contribsTemplate = Handlebars.compile(template);
             const reports = (options.reports || []);
             const reportsLength = reports.length;
             const reportsWeek = reports.filter(r => (now - new Date(r.timestamp)) <= weekMondayDiff);

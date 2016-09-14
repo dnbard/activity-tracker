@@ -24,8 +24,8 @@ const cals = [
     { speed: 40, cals: 944 }
 ]; //weight 59 kg
 
-exports.getCalories = function(distance, time, weight){
-    const averageSpeed = distance / time / MINUTES_IN_HOUR;
+exports.getCalories = function(distance, duration, weight){
+    const averageSpeed = distance / duration * MINUTES_IN_HOUR;
     const weightMod = weight ? weight / DEFAULT_WEIGHT / FLAT_COEF : 1;
 
     const closestCalsValue = cals.map(c => {
@@ -33,5 +33,5 @@ exports.getCalories = function(distance, time, weight){
         return c;
     }).reduce((a, b) => a.diff > b.diff ? b : a);
 
-    return closestCalsValue.cals * averageSpeed / closestCalsValue.speed * time * weightMod / MINUTES_IN_HOUR
+    return closestCalsValue.cals * averageSpeed / closestCalsValue.speed * duration * weightMod / MINUTES_IN_HOUR
 }

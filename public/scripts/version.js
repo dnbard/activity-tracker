@@ -5,7 +5,7 @@ define(function(){
                 .then(r => r.json())
                 .then(data => {
                     const element = document.querySelector(options.selector);
-                    element.textContent = `Activity Tracker v${data.version}`;
+                    element.innerHTML = `<hr/>Activity Tracker v${data.version}`;
                 });
 
         }

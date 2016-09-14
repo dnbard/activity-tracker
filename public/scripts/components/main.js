@@ -161,8 +161,11 @@ define([
                     explorerReportElement.style.display="block";
                     explorerReportElement.querySelector('.date').textContent = e.target.title;
                     explorerReportElement._date = e.target.getAttribute('data-timestamp');
-                    starSelected = -1;
-                    highlightStars(-1);
+
+                    document.querySelector('#distance .input').value = '';
+                    document.querySelector('#distance .input').focus();
+                    document.querySelector('#duration .input').value = '';
+                    document.querySelector('#score').style.display = 'none';
 
                     selectedReport = null;
                 } else {
@@ -170,43 +173,23 @@ define([
                     explorerReportElement.style.display="block";
                     explorerReportElement.querySelector('.date').textContent = e.target.title;
                     explorerReportElement._date = e.target.getAttribute('data-timestamp');
-                    starSelected = report.score - 1;
-                    highlightStars(report.score - 1);
 
                     selectedReport = report;
+
+                    document.querySelector('#distance .input').value = report.distance;
+                    document.querySelector('#duration .input').value = report.duration;
+                    document.querySelector('#score').style.display = '';
+                    document.querySelector('#score .input').value = report.calories.toFixed(0);
                 }
             }
 
             let starSelected = -1;
-            function highlightStars(hoverIndex){
-                for (var i = 0; i < 5; i ++){
-                    explorerReportElement.querySelector(`[data-index="${i}"]`).className =
-                        i <= Math.max(starSelected, hoverIndex) ? "large material-icons black" : "large material-icons gray";
-                }
-            }
-
-            explorerReportElement.querySelector('.score').onmouseover = (e) => {
-                if (e.target.className.indexOf('material-icons') === -1){
-                    highlightStars(-1);
-                    return;
-                }
-
-                const starIndex = parseInt(e.target.getAttribute('data-index'));
-                highlightStars(starIndex);
-            }
-
-            explorerReportElement.querySelector('.score').onclick = function(e){
-                if (e.target.className.indexOf('material-icons') === -1){
-                    return;
-                }
-
-                const starIndex = parseInt(e.target.getAttribute('data-index'));
-                starSelected = starIndex;
-                highlightStars(-1);
-            }
 
             explorerReportElement.querySelector('.btn.send').onclick = function(e){
-                if (starSelected < 0){
+                const distance = document.querySelector('#distance .input').value;
+                const duration = document.querySelector('#duration .input').value;
+
+                if (!distance || !duration){
                     return;
                 }
 
@@ -224,7 +207,8 @@ define([
                     fetch('/reports', {
                         method: 'post',
                         body: JSON.stringify({
-                            score: starSelected + 1,
+                            duration: duration,
+                            distance: distance,
                             timestamp: explorerReportElement._date
                         })
                     }).then(onScoreChanges).catch(onScoreChangeFailure);
@@ -232,7 +216,8 @@ define([
                     fetch(`/reports/${selectedReport._id}`, {
                         method: 'post',
                         body: JSON.stringify({
-                            score: starSelected + 1
+                            duration: duration,
+                            distance: distance
                         })
                     }).then(onScoreChanges).catch(onScoreChangeFailure);
                 }

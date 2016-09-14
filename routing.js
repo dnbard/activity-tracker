@@ -1,6 +1,7 @@
 const ReportsController = require('./controllers/reports');
 const UsersController = require('./controllers/users');
 const InfoController = require('./controllers/info');
+const Calc = require('./core/calc');
 
 function getUser(req, res, next){
     const token = req.headers['authorization'];
@@ -35,9 +36,20 @@ exports.init = function(app){
         const identityId = req._user._id;
         const body = req.body;
 
+        console.log(req._user);
+
+        try{
+            const distance = parseInt(body.distance);
+            const duration = parseInt(body.duration);
+        } catch(e){
+            return res.status(400).send(e);
+        }
+
         ReportsController.createOne({
             identityId: identityId,
-            score: body.score,
+            duration: duration,
+            distance: distance,
+            score: Calc.getCalories(distance, duration, req._user.weight),
             timestamp: body.timestamp
         }, (err, report) => {
             if (err){
@@ -52,7 +64,18 @@ exports.init = function(app){
         const identityId = req._user._id;
         const body = req.body;
 
-        ReportsController.changeScoreById(identityId, req.params.id, body.score, (err, report) => {
+        try{
+            const distance = parseInt(body.distance);
+            const duration = parseInt(body.duration);
+        } catch(e){
+            return res.status(400).send(e);
+        }
+
+        ReportsController.changeReportById(identityId, req.params.id, {
+            duration: duration,
+            distance: distance,
+            score: Calc.getCalories(distance, duration, req._user.weight)
+        }, (err, report) => {
             if (err){
                 return res.status(400).send(err);
             }

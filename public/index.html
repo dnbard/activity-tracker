@@ -11,27 +11,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
     <script src="./scripts/ifCond.js"></script>
     <script src="./scripts/mobileDetect.js"></script>
-
-    <script id="contributions-template" type="text/x-handlebars-template">
-        <div class="contrib">
-            <div class="contrib_score">{{contibsCount}}</div>
-            <div class="contrib_details">Rides</div>
-        </div>
-        <div class="contrib">
-            <div class="contrib_score">{{lastWeekScore}}</div>
-            <div class="contrib_details">Calories last week</div>
-        </div>
-        <div class="contrib">
-            <div class="contrib_score">{{weekScore}}</div>
-            <div class="contrib_details">Calories this week</div>
-        </div>
-    </script>
-
-    <script id="welcome-template" type="text/x-handlebars-template">
-        <span class="material-icons">perm_identity</span>
-        <span>{{person}}</span>
-        <span class="material-icons btn-logout" title="Logout">not_interested</span>
-    </script>
 </head>
 
 <body>
@@ -43,12 +22,17 @@
             <i class="large material-icons">today</i>
             <span class="date"></span>
         </h1>
-        <div class="score">
-            <i data-index="0" class="large material-icons gray">grade</i>
-            <i data-index="1" class="large material-icons gray">grade</i>
-            <i data-index="2" class="large material-icons gray">grade</i>
-            <i data-index="3" class="large material-icons gray">grade</i>
-            <i data-index="4" class="large material-icons gray">grade</i>
+        <div id="distance">
+            <i class="large material-icons">explore</i>
+            Distance <input class="input" value=""/> (km)
+        </div>
+        <div id="duration">
+            <i class="large material-icons">av timer</i>
+            Duration <input class="input" value=""/> (min)
+        </div>
+        <div id="score">
+            <i class="large material-icons">av timer</i>
+            Score <input class="input" value="" disabled/> (cal)
         </div>
         <div class="buttons">
             <button class="btn send">Send</button>
