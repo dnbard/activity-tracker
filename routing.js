@@ -110,6 +110,23 @@ exports.init = function(app){
         });
     });
 
+    app.post('/users/:id', [getUser], (req, res) => {
+        const body = req.body;
+        const user = req._user;
+
+        if (user._id !== req.params.id){
+            return res.status(403).send('Unauthorized');
+        }
+
+        UsersController.updateById(req.params.id, body, (err, user) => {
+            if (err){
+                return res.status(400).send(err);
+            }
+
+            res.send(user);
+        });
+    });
+
     /* LOGIN */
 
     app.get('/login', (req, res) => {

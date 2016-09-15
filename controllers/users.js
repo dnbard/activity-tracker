@@ -1,5 +1,6 @@
 const Token = require('../models/tokens');
 const User = require('../models/users');
+const _ = require('lodash');
 
 exports.createOne = function(data, cb){
     const user = new User({
@@ -85,6 +86,24 @@ exports.getUserbyToken = function(token, cb){
             }
 
             cb(null, user);
+        });
+    });
+}
+
+exports.updateById = function(userId, data, cb){
+    User.findOne({ _id: userId }, (err, user) => {
+        if (err){
+            return cb(err);
+        }
+
+        _.each(data, (value, field) => {
+            if (user[field] !== 'undefined' && field.indexOf('_') === -1){
+                user[field] = value;
+            }
+        });
+
+        user.save((err) => {
+            return cb(err, user);
         });
     });
 }
