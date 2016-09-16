@@ -36,8 +36,6 @@ exports.init = function(app){
         const identityId = req._user._id;
         const body = req.body;
 
-        console.log(req._user);
-
         try{
             const distance = parseInt(body.distance);
             const duration = parseInt(body.duration);
@@ -114,7 +112,7 @@ exports.init = function(app){
         const body = req.body;
         const user = req._user;
 
-        if (user._id !== req.params.id){
+        if (user._id != req.params.id){
             return res.status(403).send('Unauthorized');
         }
 

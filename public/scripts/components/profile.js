@@ -18,6 +18,17 @@ define([
                 });
 
                 userId = user._id;
+
+                document.querySelector('#save-btn').onclick = function(){
+                    const weightValue = parseInt(document.querySelector('#weight .input').value);
+
+                    fetch(`/users/${userId}`, {
+                        method: 'post',
+                        body: JSON.stringify({
+                            weight: weightValue
+                        })
+                    });
+                }
             });
         }
     };
