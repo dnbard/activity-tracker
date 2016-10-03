@@ -103,6 +103,20 @@ hr{
     opacity: 1;
 }
 
+.day-counter{
+    display: none;
+}
+
+.day-counter.set{
+    display: block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 13px 13px 0 0;
+    border-color: #007bff transparent transparent transparent;
+    margin: -1px 0 0 -1px;
+}
+
 .material-icons.gray{
     color: #eee;
 }

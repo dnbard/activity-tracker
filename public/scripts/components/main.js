@@ -42,6 +42,7 @@ define([
                     dayElement.classList.add('holiday');
                 }
 
+                DOM.createCustomDiv(dayElement, 'day-counter');
                 floatingDate.setDate(floatingDate.getDate() - 1);
             }
 
@@ -61,6 +62,7 @@ define([
                         dayElement.classList.add('holiday');
                     }
 
+                    DOM.createCustomDiv(dayElement, 'day-counter');
                     const dateArray = floatingDate.toDateString().split(' ');
 
                     const previousMonth = floatingDate.getMonth();
@@ -90,8 +92,6 @@ define([
                 }
             }
 
-            let reportsCollection = [];
-
             const colors = {
                 5: '#1e6823',
                 4: '#44a340',
@@ -113,8 +113,10 @@ define([
 
                 el._report = report;
 
-                if (report.score > 0){
+                if (report.kind === 'activity.biking' && report.score > 0){
                     el.style.background = colors[report.score];
+                } else if (report.kind === 'activity.pushups') {
+                    el.querySelector('.day-counter').classList.add('set');
                 }
             }
 
@@ -134,8 +136,6 @@ define([
             fetch('/reports').then(reports => {
                 formatScore(reports);
                 reports.forEach(colorCell);
-
-                reportsCollection = reports;
 
                 Contributions.init({
                     container: weeksWrapperNew,
