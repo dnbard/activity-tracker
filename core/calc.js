@@ -1,3 +1,5 @@
+const Activities = require('../enums/activities');
+
 const DEFAULT_WEIGHT = 59;
 const FLAT_COEF = 1.22;
 const MINUTES_IN_HOUR = 60;
@@ -24,14 +26,19 @@ const cals = [
     { speed: 40, cals: 944 }
 ]; //weight 59 kg
 
-exports.getCalories = function(distance, duration, weight){
+exports.getCalories = function(distance, duration, weight, activityType){
     const averageSpeed = distance / duration * MINUTES_IN_HOUR;
     const weightMod = weight ? weight / DEFAULT_WEIGHT / FLAT_COEF : 1;
+    const activity = activityType || Activities.BIKING;
 
-    const closestCalsValue = cals.map(c => {
-        c.diff = Math.abs(c.speed - averageSpeed);
-        return c;
-    }).reduce((a, b) => a.diff > b.diff ? b : a);
+    if (activity === Activities.BIKING){
+        const closestCalsValue = cals.map(c => {
+            c.diff = Math.abs(c.speed - averageSpeed);
+            return c;
+        }).reduce((a, b) => a.diff > b.diff ? b : a);
 
-    return closestCalsValue.cals * averageSpeed / closestCalsValue.speed * duration * weightMod / MINUTES_IN_HOUR
+        return closestCalsValue.cals * averageSpeed / closestCalsValue.speed * duration * weightMod / MINUTES_IN_HOUR
+    } else {
+        return 0;
+    }
 }

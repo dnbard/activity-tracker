@@ -4,7 +4,8 @@ const Report = mongoose.model('Report', {
     identityId: { type: String, index: true, required: true },
     score: { type: Number },
     duration: { type: Number, required: true },
-    distance: { type: Number, required: true }
+    distance: { type: Number, required: true },
+    kind: String
 });
 
 module.exports = Report;

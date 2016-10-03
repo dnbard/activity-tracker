@@ -9,7 +9,8 @@ exports.getFewByIdentity = function(identity, cb){
         timestamp: true,
         score: true,
         distance: true,
-        duration: true
+        duration: true,
+        kind: true
     }, cb);
 }
 

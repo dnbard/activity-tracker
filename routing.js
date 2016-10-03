@@ -1,6 +1,7 @@
 const ReportsController = require('./controllers/reports');
 const UsersController = require('./controllers/users');
 const InfoController = require('./controllers/info');
+const Activities = require('./enums/activities');
 const Calc = require('./core/calc');
 
 function getUser(req, res, next){
@@ -48,7 +49,8 @@ exports.init = function(app){
             duration: duration,
             distance: distance,
             score: Calc.getCalories(distance, duration, req._user.weight),
-            timestamp: body.timestamp
+            timestamp: body.timestamp,
+            kind: Activities.BIKING
         }, (err, report) => {
             if (err){
                 return res.status(500).send(err);
