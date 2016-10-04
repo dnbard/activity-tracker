@@ -18,24 +18,38 @@
     <main></main>
     <section id="explorer"></section>
     <section id="explorer-report" style="display: none;">
-        <h1>
-            <i class="large material-icons">today</i>
-            <span class="date"></span>
-        </h1>
-        <div id="distance">
-            <i class="large material-icons">explore</i>
-            Distance <input class="input" value=""/> (km)
+        <div class="tabs"></div>
+        <div>
+            <h1>
+                <i class="large material-icons">today</i>
+                <span class="date"></span>
+            </h1>
         </div>
-        <div id="duration">
-            <i class="large material-icons">av timer</i>
-            Duration <input class="input" value=""/> (min)
+        <div class="tab-content" data-id="directions_bike">
+            <div id="distance">
+                <i class="large material-icons">explore</i>
+                Distance <input class="input" value=""/> (km)
+            </div>
+            <div id="duration">
+                <i class="large material-icons">av timer</i>
+                Duration <input class="input" value=""/> (min)
+            </div>
+            <div id="score">
+                <i class="large material-icons">whatshot</i>
+                Score <input class="input" value="" disabled/> (cal)
+            </div>
+            <div class="buttons">
+                <button class="btn send">Send</button>
+            </div>
         </div>
-        <div id="score">
-            <i class="large material-icons">whatshot</i>
-            Score <input class="input" value="" disabled/> (cal)
-        </div>
-        <div class="buttons">
-            <button class="btn send">Send</button>
+        <div class="tab-content" data-id="streetview" style="display: none;">
+            <div id="pushups">
+                <i class="large material-icons">streetview</i>
+                Pushups <input class="input" value=""/> (number)
+            </div>
+            <div class="buttons">
+                <button class="btn send-pushups">Send</button>
+            </div>
         </div>
     </section>
     <section id="version"></section>

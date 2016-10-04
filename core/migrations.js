@@ -9,7 +9,8 @@ const migrations = [
     require('../migrations/2-weightScore'),
     require('../migrations/3-setDefaultWeight'),
     require('../migrations/4-convertDurationIntoMinutes'),
-    require('../migrations/5-setDefaultActivity')
+    require('../migrations/5-setDefaultActivity'),
+    require('../migrations/6-setZeroCount')
 ];
 
 exports.init = function(options, cb){

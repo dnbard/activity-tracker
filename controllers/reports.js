@@ -10,7 +10,8 @@ exports.getFewByIdentity = function(identity, cb){
         score: true,
         distance: true,
         duration: true,
-        kind: true
+        kind: true,
+        count: true
     }, cb);
 }
 
@@ -20,16 +21,16 @@ exports.createOne = function(report, cb){
 }
 
 exports.changeReportById = function(identityId, reportId, data, cb){
-    if (typeof data.score !== 'number' || data.score <= 0){
-        return cb(new TypeError('Score should be a number greater than 0'));
+    if (typeof data.score !== 'number' || data.score < 0){
+        return cb(new TypeError('Score should be a number greater or eqaul to 0'));
     }
 
-    if (typeof data.distance !== 'number' || data.distance <= 0){
-        return cb(new TypeError('Distance should be a number greater than 0'));
+    if (typeof data.distance !== 'number' || data.distance < 0){
+        return cb(new TypeError('Distance should be a number greater or eqaul to 0'));
     }
 
-    if (typeof data.duration !== 'number' || data.duration <= 0){
-        return cb(new TypeError('Duration should be a number greater than 0'));
+    if (typeof data.duration !== 'number' || data.duration < 0){
+        return cb(new TypeError('Duration should be a number greater or eqaul to 0'));
     }
 
     Report.findOne({ _id: reportId }, (err, report) => {
@@ -48,6 +49,7 @@ exports.changeReportById = function(identityId, reportId, data, cb){
         report.score = data.score;
         report.distance = data.distance;
         report.duration = data.duration;
+        report.count = data.count;
         report.save(() => {
             cb(null, report);
         });

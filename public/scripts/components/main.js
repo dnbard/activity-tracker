@@ -3,8 +3,9 @@ define([
     'core/fetch',
     'contributions',
     'helpers/dom',
-    'helpers/holiday'
-], function(tokenProvider, fetch, Contributions, DOM, Holiday){
+    'helpers/holiday',
+    'components/tab'
+], function(tokenProvider, fetch, Contributions, DOM, Holiday, Tab){
     return {
         init: function(){
             const token = tokenProvider.get();
@@ -111,11 +112,11 @@ define([
                     return;
                 }
 
-                el._report = report;
-
                 if (report.kind === 'activity.biking' && report.score > 0){
+                    el._report = report;
                     el.style.background = colors[report.score];
                 } else if (report.kind === 'activity.pushups') {
+                    el._report_pushups = report;
                     el.querySelector('.day-counter').classList.add('set');
                 }
             }
@@ -148,7 +149,8 @@ define([
 
             weeksWrapper.onclick = function(e){
                 const element = document.querySelector('#explorer');
-                const report = e.target._report;
+                const report = e.target._report,
+                      pushupReport = e.target._report_pushups;
 
                 if (e.target.className.indexOf('day') === -1){
                     element.innerHTML = '';
@@ -156,7 +158,7 @@ define([
                     return;
                 }
 
-                if (!report){
+                if (!report && !pushupReport){
                     element.innerHTML = '';
                     explorerReportElement.style.display="block";
                     explorerReportElement.querySelector('.date').textContent = e.target.title;
@@ -165,6 +167,7 @@ define([
                     document.querySelector('#distance .input').value = '';
                     document.querySelector('#distance .input').focus();
                     document.querySelector('#duration .input').value = '';
+                    document.querySelector('#pushups .input').value = '';
                     document.querySelector('#score').style.display = 'none';
 
                     selectedReport = null;
@@ -174,18 +177,62 @@ define([
                     explorerReportElement.querySelector('.date').textContent = e.target.title;
                     explorerReportElement._date = e.target.getAttribute('data-timestamp');
 
-                    selectedReport = report;
+                    selectedReport = {
+                        biking: report,
+                        pushups: pushupReport,
+                    };
 
-                    document.querySelector('#distance .input').value = report.distance;
-                    document.querySelector('#duration .input').value = report.duration;
+                    document.querySelector('#distance .input').value = report ? report.distance : '';
+                    document.querySelector('#duration .input').value = report ? report.duration : '';
+                    document.querySelector('#pushups .input').value = pushupReport ? pushupReport.count : '';
                     document.querySelector('#score').style.display = '';
-                    document.querySelector('#score .input').value = report.calories.toFixed(0);
+                    document.querySelector('#score .input').value = report ? report.calories.toFixed(0) : '';
                 }
             }
 
             let starSelected = -1;
 
-            explorerReportElement.querySelector('.btn.send').onclick = function(e){
+            explorerReportElement.querySelector('.btn.send-pushups').onclick = function(){
+                const pushups = document.querySelector('#pushups .input').value;
+
+                if (!pushups){
+                    return;
+                }
+
+                function onScoreChanges(report){
+                    explorerReportElement.style.display="none";
+                    location.reload();
+                }
+
+                function onScoreChangeFailure(){
+                    explorerReportElement.style.display="none";
+                }
+
+                if (selectedReport == null || !selectedReport.pushups){
+                    fetch('/reports', {
+                        method: 'post',
+                        body: JSON.stringify({
+                            count: pushups,
+                            timestamp: explorerReportElement._date,
+                            duration: 0,
+                            distance: 0,
+                            kind: 'activity.pushups'
+                        })
+                    }).then(onScoreChanges).catch(onScoreChangeFailure);
+                } else {
+                    fetch(`/reports/${selectedReport.pushups._id}`, {
+                        method: 'post',
+                        body: JSON.stringify({
+                            count: pushups,
+                            duration: 0,
+                            distance: 0,
+                            kind: 'activity.pushups'
+                        })
+                    }).then(onScoreChanges).catch(onScoreChangeFailure);
+                }
+            }
+
+            explorerReportElement.querySelector('.btn.send').onclick = function(){
                 const distance = document.querySelector('#distance .input').value;
                 const duration = document.querySelector('#duration .input').value;
 
@@ -203,25 +250,31 @@ define([
                     explorerReportElement.style.display="none";
                 }
 
-                if (selectedReport == null){
+                if (selectedReport == null || !selectedReport.biking){
                     fetch('/reports', {
                         method: 'post',
                         body: JSON.stringify({
                             duration: duration,
                             distance: distance,
+                            count: 0,
                             timestamp: explorerReportElement._date
                         })
                     }).then(onScoreChanges).catch(onScoreChangeFailure);
                 } else {
-                    fetch(`/reports/${selectedReport._id}`, {
+                    fetch(`/reports/${selectedReport.biking._id}`, {
                         method: 'post',
                         body: JSON.stringify({
                             duration: duration,
-                            distance: distance
+                            distance: distance,
+                            kind: 'activity.biking'
                         })
                     }).then(onScoreChanges).catch(onScoreChangeFailure);
                 }
             }
+
+            const tabWrapper = document.querySelector('.tabs');
+            Tab.init(tabWrapper, 'directions_bike', true);
+            Tab.init(tabWrapper, 'streetview', false);
         }
     }
 });

@@ -5,6 +5,7 @@ const Report = mongoose.model('Report', {
     score: { type: Number },
     duration: { type: Number, required: true },
     distance: { type: Number, required: true },
+    count: { type: Number, required: true },
     kind: String
 });
 

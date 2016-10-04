@@ -40,17 +40,21 @@ exports.init = function(app){
         try{
             const distance = parseInt(body.distance);
             const duration = parseInt(body.duration);
+            const count = parseInt(body.count);
         } catch(e){
             return res.status(400).send(e);
         }
+
+        const activity = body.kind || Activities.BIKING;
 
         ReportsController.createOne({
             identityId: identityId,
             duration: duration,
             distance: distance,
-            score: Calc.getCalories(distance, duration, req._user.weight),
+            score: Calc.getCalories(distance, duration, req._user.weight, activity),
             timestamp: body.timestamp,
-            kind: Activities.BIKING
+            kind: activity,
+            count: count
         }, (err, report) => {
             if (err){
                 return res.status(500).send(err);
@@ -67,6 +71,7 @@ exports.init = function(app){
         try{
             const distance = parseInt(body.distance);
             const duration = parseInt(body.duration);
+            const count = parseInt(body.count);
         } catch(e){
             return res.status(400).send(e);
         }
@@ -74,7 +79,8 @@ exports.init = function(app){
         ReportsController.changeReportById(identityId, req.params.id, {
             duration: duration,
             distance: distance,
-            score: Calc.getCalories(distance, duration, req._user.weight)
+            count: count,
+            score: Calc.getCalories(distance, duration, req._user.weight, body.kind)
         }, (err, report) => {
             if (err){
                 return res.status(400).send(err);
