@@ -8,6 +8,7 @@ exports.createOne = function(data, cb){
         password: data.password,
         createdAt: new Date(),
         updatedAt: new Date(),
+        weight: 59
     });
 
     user.save((err, user) => {
